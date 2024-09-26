@@ -108,37 +108,21 @@ OUTPUT: ![WhatsApp Image 2024-09-19 at 14 28 14_4721ac4f](https://github.com/use
 
 
 4:1 MUX Structural Implementation
+module mux_4to1 (a,b,c,d,S0,S1,Y);
 
-// mux2_to_1.v
-module mux2_to_1 (
-    input wire A,
-    input wire B,
-    input wire S,
-    output wire Y
-);
-    assign Y = S ? B : A;
+input a,b,c,d;
+    input  S0, S1;       
+    output  Y ;          
+
+assign Y = (S1 == 0 && S0 == 0) ? a :
+               (S1 == 0 && S0 == 1) ? b :
+               (S1 == 1 && S0 == 0) ? c :
+               (S1 == 1 && S0 == 1) ? d:
+
 endmodule
 
+Output : ![structural](https://github.com/user-attachments/assets/4fcdb673-d070-4745-bf1b-75a02b8f7ee5)
 
-// mux4_to_1_structural.v
-module mux4_to_1_structural (
-    input wire A,
-    input wire B,
-    input wire C,
-    input wire D,
-    input wire S0,
-    input wire S1,
-    output wire Y
-);
-    wire mux_low, mux_high;
-
-    // Instantiate two 2:1 MUXes
-    mux2_to_1 mux0 (.A(A), .B(B), .S(S0), .Y(mux_low));
-    mux2_to_1 mux1 (.A(C), .B(D), .S(S0), .Y(mux_high));
-
-    // Instantiate the final 2:1 MUX
-    mux2_to_1 mux_final (.A(mux_low), .B(mux_high), .S(S1), .Y(Y));
-endmodule
 
 Testbench Implementation
 
